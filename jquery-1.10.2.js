@@ -9786,4 +9786,8 @@ if ( typeof module === "object" && module && typeof module.exports === "object" 
 	}
 }
 
+<<<<<<< HEAD
 })( window );
+=======
+})( window );
+>>>>>>> 18a69bfc4b2a4afc19135b27130b82387d45281e
