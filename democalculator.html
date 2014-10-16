@@ -1,0 +1,272 @@
+<style>
+.calcu{
+  width:200px;
+  margin:50px auto;
+  padding:20px;
+  border:1px solid #323232;
+  border-radius:6px;
+ }
+ .h2{
+  text-align:center;
+  margin-top:0px;
+ }
+ .row{
+  width:95%;
+  margin:auto;
+  clear:both;
+ }
+ .button{
+  display:inline-block;
+  width:20px;
+  padding:10px;
+  background-color:#ccc;
+  margin:2px;
+  text-align:center;
+ }
+ .button:hover{
+  background-color:#323232;
+  color:#fff;
+  cursor:pointer;
+ }
+ .button1{
+  display:inline-block;
+  width:90%;
+  padding:10px;
+  background-color:#ccc;
+  margin:2px;
+  text-align:center;
+ }
+ .button1:hover{
+  background-color:#323232;
+  color:#fff;
+  cursor:pointer;
+ }
+ .result{
+  background-color:#C3E4ED;
+  padding-right:5px;
+  border:1px solid #fff;
+  width:100%;
+  height:30px;
+  text-align:right;
+  font-weight:bold;
+ }
+ .val{
+  margin-bottom:10px;
+ }
+
+</style>
+
+<div class="calcu" ng-app="" ng-controller="calcaController" ng-keydown="myFunct($event)">
+   
+ <h2>Calculator</h2>
+ <div class="row val">
+  <input class="result" id ="ans" name="calculator" readonly type="text" ng-model="calc.res" />
+        
+ </div>
+ <div class="button-set">
+ <div class="row">
+  <div class="button" ng-click="calc.res= calc.res+'1';">1</div>
+  <div class="button" ng-click="calc.res= calc.res+'2';">2</div>
+  <div class="button" ng-click="calc.res= calc.res+'3';">3</div>
+  <div class="button" ng-click="calc.res= calc.res+'4';">4</div> 
+ </div>
+ <div class="row">
+  <div class="button" ng-click="calc.res= calc.res+'5';">5</div>
+  <div class="button" ng-click="calc.res= calc.res+'6';">6</div>
+  <div class="button" ng-click="calc.res= calc.res+'7';">7</div>
+  <div class="button" ng-click="calc.res= calc.res+'8';">8</div> 
+ </div>
+ <div class="row">
+  <div class="button" ng-click="calc.res= calc.res+'9';">9</div>
+  <div class="button" ng-click="calc.res= calc.res+'0';">0</div>
+  <div class="button" ng-click="calc.res= calc.res+'+';">+</div>
+  <div class="button" ng-click="calc.res= calc.res+'-';">-</div> 
+ </div>
+ <div class="row">
+  <div class="button" ng-click="calc.res= calc.res+'*';">*</div>
+  <div class="button" ng-click="calc.res= calc.res+'/';">/</div>
+  <div class="button" ng-click="calc.res=calc.calculate();">=</div>
+  <div class="button" ng-click="calc.res= calc.res+'.';">.</div> 
+ </div>
+ <div>
+ <div class="button1" ng-click="calc.res= calc.clear();">C</div> 
+</div>
+ </div>
+</div> 
+
+
+<script>
+
+    
+function calcaController($scope) {
+        var op=0;
+        //var str = $scope.calc;
+        //console.log(str);
+        /*function isBlank(str) {
+            alert("ok");
+            var curr_val='';
+        }*/
+      $scope.myFunct = function(ev) {
+            //var op=0;
+            
+            var x = $scope.calc;
+            if (ev.keyCode)
+                code = ev.keyCode;
+            else if (ev.which)
+                code = ev.which;
+            $scope.pressed = code;
+           /* if($scope.calc.res==""){
+              var ch=$scope.pressed;
+              
+                var curr_val='';
+                $scope.calc.res = $scope.calc.res+curr_val;
+              
+            }*/
+            if ((ev.which==13)||(ev.which==61)||(ev.which==187))
+                $scope.calc.res = $scope.calc.calculate();
+            else if((ev.which>64) && (ev.which<92)){
+                  var ch=$scope.pressed;
+                  var curr_val='';
+                  $scope.calc.res = $scope.calc.res+curr_val;
+            }
+          
+
+            else if((ev.which==8)){
+                var string = $scope.calc.res.toString();
+                $scope.calc.res=string.substring(0, string.length - 1);
+            }
+            else if(((ev.which>47)&&(ev.which<58)) || ((ev.which>95)&&(ev.which<106)) || ((ev.which==173)||(ev.which==191)||(ev.which==106)||(ev.which==107)||(ev.which==109)||(ev.which==111)||(ev.which==190)||(ev.which==110)))
+            {
+                var ch=$scope.pressed;
+                var curr_val=0;
+                //var op=0;
+                switch (ch)
+                {
+                  case 48: 
+                  case 96: 
+                            curr_val=0;
+                            break;  
+                  case 49:
+                  case 97: 
+                            curr_val=1;
+                            break;
+                  case 50: 
+                  case 98:
+                            curr_val=2;
+                            break;
+                  case 51:
+                  case 99: 
+                            curr_val=3;
+                            break;
+                  case 52: 
+                  case 100:
+                            curr_val=4;
+                            break;
+                  case 53: 
+                  case 101:
+                            curr_val=5;
+                            break;
+                  case 54: 
+                  case 102:
+                            curr_val=6;
+                            break;
+                  case 55: 
+                  case 103:
+                            curr_val=7;
+                            break;
+                  case 56: 
+                  case 104:
+                            curr_val=8;
+                             break;
+                  case 57: 
+                  case 105:
+                            curr_val=9;
+                            break;
+                  case 173:
+                  case 109:
+                            //op++;
+                            curr_val='-';
+                            op++;
+                            break;
+                  case 191:
+                  case 111:
+                            //op++;
+                            curr_val='/';
+                            op++;
+                            break;
+                  case 106:
+                            //op++;
+                            curr_val='*';
+                            op++;
+                            break;
+                  case 107:
+                            //op++;
+                            curr_val='+';
+                            op++;
+                            break;
+                  case 190:
+                  case 110:
+                            curr_val='.';
+                            break;
+                  default: break;
+                }
+                   $scope.calc.res = $scope.calc.res+curr_val;
+
+                
+                //for calculating immediate evaluation
+                if(op==2)
+                {   
+                  //alert("ok");
+                    var string = $scope.calc.res.toString();
+                    var second_op=string.substring(string.length-1,string.length);
+                    //alert(second_op);
+                    var tmp_cal=string.substring(0,string.length-1);
+                    //alert(tmp_cal);
+                 
+                var tmp_result=tmp_cus_cal(tmp_cal).toString();
+                //alert(tmp_cal);
+                tmp_result+=second_op;  
+                $scope.calc.res =tmp_result;
+                //alert(tmp_result);
+                op=1;
+                }               
+                //end calculation 
+                
+
+            
+        }
+        
+        
+    };
+    function tmp_cus_cal(tmp_cal)
+                {
+                  //console.log(tmp_cal);
+                    //alert("i");
+                    //var x = $scope.calc;
+                    //alert(x);
+                    //console.log(eval(tmp_cal));
+                    return eval(tmp_cal);
+                }
+                //var str=$scope.calc.res;
+               
+    $scope.calc = {
+                    res: '',
+                    calculate:function(){
+                                          var x = $scope.calc;
+                                          //var str=x.split("");
+                                        // alert(x);
+                                          //var parser=new Parser();
+                                          return eval(x.res);
+                                          //return x.split(x.res);
+                    },
+                    clear:function(){
+                                          $(".result").focus();
+                                          return '';
+                    }
+    };
+    
+}
+</script>
+
+<script src="angular.min.js"></script>
+<script src="jquery-1.10.2.js"></script>
